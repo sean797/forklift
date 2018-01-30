@@ -1,0 +1,29 @@
+---
+- hosts:
+    - centos7-foreman-smart-proxy1
+    - centos7-foreman-smart-proxy2
+  become: true
+  vars:
+    foreman_installer_scenario: foreman-proxy
+    foreman_installer_pkg: foreman-installer
+    foreman_installer_scenarios_answers:
+      foreman_proxy:
+        foreman_base_url: https://centos7-foreman-ha.sean.example.com
+        trusted_hosts:
+          - centos7-foreman-ha.sean.example.com
+          - centos7-foreman-ha-node1.sean.example.com
+          - centos7-foreman-ha-node2.sean.example.com
+          - centos7-foreman-smart-proxy.sean.example.com
+          - centos7-foreman-smart-proxy1.sean.example.com
+          - centos7-foreman-smart-proxy2.sean.example.com
+        oauth_consumer_key: zScjdTcek2ubVzGANKhmGDbD9z6v8Fyo
+        oauth_consumer_secret: 4YdMrfjbgZxwerNFkMAYx22BJ9jyDcAo
+        puppet_ssl_cert: /etc/puppetlabs/puppet/ssl/certs/centos7-foreman-smart-proxy.sean.example.com.pem
+        puppet_ssl_key: /etc/puppetlabs/puppet/ssl/private_keys/centos7-foreman-smart-proxy.sean.example.com.pem
+        ssl_cert: /etc/puppetlabs/puppet/ssl/certs/centos7-foreman-smart-proxy.sean.example.com.pem
+        ssl_key: /etc/puppetlabs/puppet/ssl/private_keys/centos7-foreman-smart-proxy.sean.example.com.pem
+        template_url: http://centos7-foreman-smart-proxy.sean.example.com:8000
+      puppet:
+        server_foreman_url: https://centos7-foreman-ha.sean.example.com
+  roles:
+    - sean797.foreman_installer

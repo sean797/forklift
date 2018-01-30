@@ -1,0 +1,35 @@
+---
+- hosts:
+    - centos7-foreman-ha-node1
+    - centos7-foreman-ha-node2
+  become: true
+  vars:
+    foreman_installer_scenario: foreman
+    foreman_installer_pkg: foreman-installer
+    foreman_installer_encryption_key: 9ea80a8f56760ce66c9e45cd27f7c7fa
+    foreman_installer_scenarios_answers:
+      foreman:
+        foreman_url: https://centos7-foreman-ha.sean.example.com
+        servername: centos7-foreman-ha.sean.example.com
+        admin_password: changeme
+        db_host: postgres.sean.example.com
+        db_port: 5432
+        db_database: foreman
+        db_username: foreman
+        db_password: TDFfhWuByn4fuyUErtJTEpyJvMxxdWqN
+        oauth_consumer_key: zScjdTcek2ubVzGANKhmGDbD9z6v8Fyo
+        oauth_consumer_secret: 4YdMrfjbgZxwerNFkMAYx22BJ9jyDcAo
+      puppet:
+        dns_alt_names:
+          - centos7-foreman-ha-node1.sean.example.com
+          - centos7-foreman-ha-node2.sean.example.com
+      foreman::plugin::memcache:
+        hosts:
+          - centos7-foreman-ha-node2.sean.example.com
+          - centos7-foreman-ha-node1.sean.example.com
+        expires_in: 86400
+        namespace: foreman
+        compress: true
+      foreman_proxy: false
+  roles:
+    - sean797.foreman_installer

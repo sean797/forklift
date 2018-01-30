@@ -14,7 +14,7 @@ Gemfile.lock
 .ruby-gemset
 *.retry
 *.pyc
-user_playbooks
+#user_playbooks
 playbooks/galaxy_roles
 requirements.yml
 .tmp_boxes
